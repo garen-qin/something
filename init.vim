@@ -3,6 +3,7 @@ set number
 
 "缩进间隔
 set shiftwidth=2
+set tabstop=2
 
 "忽略大小写
 set ignorecase
@@ -16,8 +17,14 @@ set relativenumber
 "高亮当前行
 set cursorline
 
-"启用鼠标
+"normal模式启用鼠标
 set mouse=n
+
+"背景颜色
+"set termguicolors
+
+"不要产生交换文件
+set noswapfile
 
 
 "------------------------------------------插件开始---------------------------------------------"
@@ -27,7 +34,13 @@ Plug 'morhetz/gruvbox'
 Plug 'easymotion/vim-easymotion'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'voldikss/vim-floaterm'
+Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
+Plug 'mxw/vim-jsx'
+Plug 'mhinz/vim-startify'
+Plug 'pangloss/vim-javascript'
+Plug 'yggdroot/indentline'
+Plug 'Chiel92/vim-autoformat'
 call plug#end()
 "-------------------------------------------插件结束--------------------------------------------"
 
@@ -35,25 +48,29 @@ call plug#end()
 "leader键配置
 let mapleader="\<Space>"
 
+"缩进符号
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
 "coc插件
-let g:coc_global_extensions = ['coc-json', 'coc-explorer']
+let g:coc_global_extensions = ['coc-json', 'coc-explorer', 'coc-html', 'coc-emmet']
 
 "airline显示顶部buffer
 let g:airline#extensions#tabline#enabled=1
 "airline字体图标
 let g:airline_powerline_fonts=1
 "airline顶部标签显示编号
-let g:airline#extensions#tabline#buffer_nr_show=1  
+let g:airline#extensions#tabline#buffer_nr_show=1
 
 "打开浮动terminal
 let g:floaterm_keymap_toggle = '<f3>'
 
 
 "颜色主题
-colorscheme gruvbox
+colorscheme onedark
 
 "透明背景
-hi Normal ctermbg=none
+"hi Normal ctermbg=none
+hi Normal ctermfg=252 ctermbg=none
 
 
 "------------------------------插入模式------------------------------"
@@ -100,8 +117,12 @@ nnoremap <silent><Leader>h :nohlsearch<cr>
 "打开资源管理器
 nnoremap <silent><f2> :CocCommand explorer<cr>
 
+"格式化代码
+noremap <silent><f4> :Autoformat<cr>
+
 "让vimrc配置变更立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
 
 
 

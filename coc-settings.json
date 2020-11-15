@@ -1,5 +1,5 @@
 {
-  "explorer.position":"floating",
+  "explorer.position":"left",
   "explorer.icon.enableNerdfont": true,
   "explorer.floating.width": 100
 }
