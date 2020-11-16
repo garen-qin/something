@@ -36,11 +36,15 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'voldikss/vim-floaterm'
 Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
-Plug 'mxw/vim-jsx'
 Plug 'mhinz/vim-startify'
 Plug 'pangloss/vim-javascript'
 Plug 'yggdroot/indentline'
 Plug 'Chiel92/vim-autoformat'
+Plug 'tpope/vim-surround'
+Plug 'w0rp/ale'
+Plug 'scrooloose/nerdcommenter'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 "-------------------------------------------插件结束--------------------------------------------"
 
@@ -52,7 +56,7 @@ let mapleader="\<Space>"
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 "coc插件
-let g:coc_global_extensions = ['coc-json', 'coc-explorer', 'coc-html', 'coc-emmet']
+let g:coc_global_extensions = ['coc-json', 'coc-explorer', 'coc-html', 'coc-emmet'] 
 
 "airline显示顶部buffer
 let g:airline#extensions#tabline#enabled=1
@@ -64,16 +68,17 @@ let g:airline#extensions#tabline#buffer_nr_show=1
 "打开浮动terminal
 let g:floaterm_keymap_toggle = '<f3>'
 
+"使用简洁注释
+let g:NERDCompactSexyComs = 1
 
 "颜色主题
 colorscheme onedark
 
 "透明背景
-"hi Normal ctermbg=none
 hi Normal ctermfg=252 ctermbg=none
 
 
-"------------------------------插入模式------------------------------"
+"------------------------------常用快捷键配置------------------------------"
 inoremap <C-p> <Esc>ka
 inoremap <C-n> <Esc>ja
 inoremap <C-f> <Esc>la
@@ -86,10 +91,18 @@ inoremap <C-h> <Esc>s
 inoremap <C-k> <Esc>ld$a
 inoremap <C-u> <Esc>d^s
 inoremap <C-w> <Esc>dawa
-"------------------------------插入模式------------------------------"
 
+" inoremap ' ''<Esc>i
+" inoremap " ""<Esc>i
+" inoremap ( ()<Esc>i
+" inoremap [ []<Esc>i
+" inoremap { {}<Esc>i
 
-"------------------------------标签页的切换--------------------------"
+cnoremap <C-b> <Left>
+cnoremap <C-f> <right>
+cnoremap <A-f> <S-Right>
+cnoremap <A-b> <S-Left>
+
 nnoremap <silent><Leader>1 :b1<cr>
 nnoremap <silent><Leader>2 :b2<cr>
 nnoremap <silent><Leader>3 :b3<cr>
@@ -99,14 +112,14 @@ nnoremap <silent><Leader>6 :b6<cr>
 nnoremap <silent><Leader>7 :b7<cr>
 nnoremap <silent><Leader>8 :b8<cr>
 nnoremap <silent><Leader>9 :b9<cr>
-"------------------------------标签页的切换--------------------------"
+"---------------------------------------------------------------------------"
 
 
 "easymotion前缀键
 map <Leader> <Plug>(easymotion-prefix)
 
 "对齐插件
-nnoremap <Leader>a <Plug>(EasyAlign)
+map <Leader>a <Plug>(EasyAlign)
 
 "打开vim配置文件
 nnoremap <silent><Leader>rc :e $MYVIMRC<cr>
@@ -124,6 +137,36 @@ noremap <silent><f4> :Autoformat<cr>
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 
+
+"一键运行程序
+map <f5> :call CompileRunGcc()<cr>
+func! CompileRunGcc()
+	exec "w"
+	if &filetype == 'c'
+		exec "!g++ % -o %<"
+		exec "!time ./%<"
+	elseif &filetype == 'cpp'
+		exec "!g++ % -o %<"
+		exec "!time ./%<"
+	elseif &filetype == 'java' 
+		exec "!javac %" 
+		exec "!time java %<"
+	elseif &filetype == 'sh'
+		:!time bash %
+	elseif &filetype == 'javascript'
+		exec "!time node %"
+	elseif &filetype == 'python'
+		exec "!time python3 %"
+	elseif &filetype == 'html'
+		exec "!firefox % &"
+	elseif &filetype == 'go'
+		exec "!go build %<"
+		exec "!time go run %"
+	elseif &filetype == 'mkd'
+		exec "!~/.vim/markdown.pl % > %.html &"
+		exec "!firefox %.html &"
+	endif
+endfunc
 
 
 
@@ -147,6 +190,16 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
 "<Leader>N            | Jump to latest "/" or "?" backward. See |N|.
 "<Leader>s            | Find(Search) {char} forward and backward.
 "                     | See |f| and |F|.
+
+"start:      <C-n> start multicursor and add a virtual cursor + selection on the match
+"next:       <C-n> add a new virtual cursor + selection on the next match
+"skip:       <C-x> skip the next match
+"prev:       <C-p> remove current virtual cursor + selection and go back on previous match
+"select all: <A-n> start multicursor and directly select all matches
+"You can now change the virtual cursors + selection with visual mode commands.
+"For instance: c, s, I, A work without any issues. 
+"You could also go to normal mode by pressing v and use normal commands there.
+"At any time, you can press <Esc> to exit back to regular Vim.
 
 
 "gk": "expandablePrev",
