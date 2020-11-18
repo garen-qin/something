@@ -26,6 +26,8 @@ set mouse=n
 "不要产生交换文件
 set noswapfile
 
+"文件更新时间   暂时是git插件的状态更新时间
+"set updatetime=100
 
 "------------------------------------------插件开始---------------------------------------------"
 call plug#begin('~/.config/nvim/plugged')
@@ -45,6 +47,9 @@ Plug 'w0rp/ale'
 Plug 'scrooloose/nerdcommenter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'jiangmiao/auto-pairs'
+Plug 'ap/vim-css-color'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 "-------------------------------------------插件结束--------------------------------------------"
 
@@ -70,6 +75,7 @@ let g:floaterm_keymap_toggle = '<f3>'
 
 "使用简洁注释
 let g:NERDCompactSexyComs = 1
+
 
 "颜色主题
 colorscheme onedark
@@ -136,6 +142,8 @@ noremap <silent><f4> :Autoformat<cr>
 "让vimrc配置变更立即生效
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
+"文件保存时候   显示git状态
+autocmd BufWritePost * GitGutter
 
 
 "一键运行程序
