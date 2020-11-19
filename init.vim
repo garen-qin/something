@@ -128,7 +128,7 @@ map <Leader> <Plug>(easymotion-prefix)
 map <Leader>a <Plug>(EasyAlign)
 
 "打开vim配置文件
-nnoremap <silent><Leader>rc :e $MYVIMRC<cr>
+nnoremap <silent><Leader>rc :edit $MYVIMRC<cr>
 
 "取消搜索的高亮
 nnoremap <silent><Leader>h :nohlsearch<cr>
